@@ -1,14 +1,19 @@
 package club;
 
 import java.util.Scanner;
+import club.Socio.Tipo;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
         int op;
+        Club c = new Club();
+        String cedula, nombre;
+        int tipoS;
+       Tipo tipo;
         do{
             System.out.println("1. Afiliar un socio al club.");
             System.out.println("2. Registrar una persona autorizada por un socio.");
@@ -18,6 +23,7 @@ public class Main {
             System.out.println("6. Salir");
             System.out.print("Ingrese una opcion: ");
             op = Integer.parseInt(sc.next());
+
 
         }while(op!=6);
 

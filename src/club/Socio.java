@@ -217,17 +217,19 @@ public class Socio
     /**
      * Aumenta los fondos disponibles del socio.
      * @param pFondos Valor por adicionar a los fondos. pFondos > 0.
-     * @throws Exception Dispara excepci�n si los fondos del socio exceder�an el l�mite establecido al realizar la transacci�n.
+     *
      */
-    public void aumentarFondos( double pFondos ) throws Exception
+    public void aumentarFondos( double pFondos )
     {
         if( tipoSubscripcion == Tipo.VIP && pFondos + fondos > MONTO_MAXIMO_VIP )
         {
-            throw new Exception( "Con este monto se exceder�an los fondos m�ximos de un socio VIP, ingrese una cantidad menor" );
+            System.out.println("Con este monto se exceder�an los fondos m�ximos de un socio VIP, ingrese una cantidad menor" );
+
+
         }
         else if( tipoSubscripcion == Tipo.REGULAR && pFondos + fondos > MONTO_MAXIMO_REGULARES )
         {
-            throw new Exception( "Con este monto se exceder�an los fondos m�ximos de un socio regular, ingrese una cantidad menor" );
+            System.out.println( "Con este monto se exceder�an los fondos m�ximos de un socio regular, ingrese una cantidad menor" );
         }
         else
         {
@@ -243,14 +245,14 @@ public class Socio
      * @param pNombre El nombre de la persona que realiz� el consumo. pNombre != null && pNombre != "".
      * @param pConcepto Es la descripci�n del consumo. pConcepto != null && pConcepto != "".
      * @param pValor Es el valor del consumo. pValor >= 0.
-     * @throws Exception Dispara excepci�n si el socio no tiene fondos suficientes para esta factura.
+     *
      */
-    public void registrarConsumo( String pNombre, String pConcepto, double pValor ) throws Exception
+    public void registrarConsumo( String pNombre, String pConcepto, double pValor )
     {
 
         if( pValor > fondos )
         {
-            throw new Exception( "El socio no posee fondos suficientes para este consumo" );
+            System.out.println( "El socio no posee fondos suficientes para este consumo" );
         }
         else
         {
@@ -264,23 +266,20 @@ public class Socio
      * <b>pre: </b> La lista de autorizados ha sido inicializada. <br>
      * <b>post: </b> Se agreg� un nuevo autorizado.
      * @param pNombreAutorizado Es el nombre de la nueva persona autorizada para el socio. pNombreAutorizado != null.
-     * @throws Exception <br>
-     *         1. Dispara una excepci�n si el nombre del socio es igual al de nombre.<br>
-     *         2. Dispara una excepci�n si el autorizado ya exist�a en la lista de autorizados de este socio. <br>
-     *         3. Dispara una excepci�n si el socio no tiene fondos para financiar un nuevo autorizado.
+     *
      */
-    public void agregarAutorizado( String pNombreAutorizado ) throws Exception
+    public void agregarAutorizado( String pNombreAutorizado )
     {
         // Verificar que el nombre del socio no es el mismo del que se quiere autorizar
         if( pNombreAutorizado.equals( darNombre( ) ) )
         {
-            throw new Exception( "No puede agregar el socio como autorizado." );
+            System.out.println( "No puede agregar el socio como autorizado." );
         }
 
         // Verificar que el socio posee fondos para financiar un nuevo autorizado
         if( fondos == 0 )
         {
-            throw new Exception( "El socio no tiene fondos para financiar un nuevo autorizado." );
+            System.out.println( "El socio no tiene fondos para financiar un nuevo autorizado." );
         }
         // Si el nombre no exist�a entonces lo agregamos
         if( !existeAutorizado( pNombreAutorizado ) )
@@ -289,7 +288,7 @@ public class Socio
         }
         else
         {
-            throw new Exception( "El autorizado ya existe." );
+            System.out.println("El autorizado ya existe." );
         }
     }
 
@@ -298,14 +297,14 @@ public class Socio
      * <b>pre: </b> La lista de autorizados ha sido inicializada. <br>
      * <b>post: </b> Se elimin� un socio, con nombre igual a alguno de los vinculados.
      * @param pNombreAutorizado Nombre del autorizado. pNombreAutorizado != null.
-     * @throws Exception Dispara una excepci�n si el autorizado tiene una factura asociada.
+     *
      */
-    public void eliminarAutorizado( String pNombreAutorizado ) throws Exception
+    public void eliminarAutorizado( String pNombreAutorizado )
     {
         boolean encontro = false;
         int numAutorizados = autorizados.size( );
         if(tieneFacturaAsociada( pNombreAutorizado )){
-            throw new Exception( pNombreAutorizado + " tiene una factura sin pagar.");
+            System.out.println( pNombreAutorizado + " tiene una factura sin pagar.");
         }
         for( int i = 0; i < numAutorizados && !encontro; i++ )
         {
@@ -323,14 +322,14 @@ public class Socio
      * <b>pre: </b> La lista de facturas ha sido inicializada. <br>
      * <b>post: </b> Se borr� la factura de la lista de facturas.
      * @param pIndiceFactura Posici�n de la factura a eliminar. facturaIndice >= 0.
-     * @throws Exception Si el socio no tiene fondos suficientes para pagar la factura.
+     *
      */
-    public void pagarFactura( int pIndiceFactura ) throws Exception
+    public void pagarFactura( int pIndiceFactura )
     {
         Factura factura = facturas.get( pIndiceFactura );
         if( factura.darValor( ) > fondos )
         {
-            throw new Exception( "El socio no posee fondos suficientes para pagar esta factura" );
+            System.out.println( "El socio no posee fondos suficientes para pagar esta factura" );
         }
         else
         {

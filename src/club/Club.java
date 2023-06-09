@@ -60,18 +60,17 @@ public class Club
      * @param pCedula C�dula del socio a afiliar. pCedula != null && pCedula != "".
      * @param pNombre Nombre del socio a afiliar. pNombre != null && pNombre != "".
      * @param pTipo Es el tipo de subscripci�n del socio. pTipo != null.
-     * @throws Exception <br>
-     *         1. Si un socio con la misma c�dula ya estaba afiliado al club. <br>
-     *         2. Si el socio a registrar desea una subscripci�n VIP pero el club ha alcanzado el l�mite.
+     *
      */
-    public void afiliarSocio( String pCedula, String pNombre, Tipo pTipo ) throws Exception
+    public void afiliarSocio( String pCedula, String pNombre, Tipo pTipo )
     {
 
         // Revisar que no haya ya un socio con la misma c�dula
         Socio s = buscarSocio( pCedula );
         if( pTipo == Tipo.VIP && contarSociosVIP( ) == MAXIMO_VIP )
         {
-            throw new Exception( "El club en el momento no acepta m�s socios VIP" );
+            System.out.println("El club en el momento no acepta m�s socios VIP" );
+
         }
         // Revisar que no se haya alcanzado el l�mite de subscripciones VIP
         if( s == null )
@@ -83,7 +82,7 @@ public class Club
         }
         else
         {
-            throw new Exception( "El socio ya existe" );
+            System.out.println( "El socio ya existe" );
         }
     }
 
@@ -153,12 +152,9 @@ public class Club
      * <b>pre:<b/> El socio con la c�dula dada existe. <b>post: </b> Se agreg� el nuevo autorizado..
      * @param pCedulaSocio La c�dula del socio al cual se va a agregar el autorizado. pCedulaSocio != null && pCedulaSocio != "".
      * @param pNombreAutorizado El nombre de la persona a autorizar. pNombreAutorizado != null && poNmbre != "".
-     * @throws Exception <br>
-     *         1. Dispara una excepci�n si el nombre del socio es igual al de autorizado. <br>
-     *         2. Dispara una excepci�n si el autorizado ya exist�a en la lista de autorizados de este socio. <br>
-     *         3. Dispara una excepci�n si el socio no tiene fondos para financiar un nuevo autorizado.
+     *
      */
-    public void agregarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado ) throws Exception
+    public void agregarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado )
     {
         Socio s = buscarSocio( pCedulaSocio );
         s.agregarAutorizado( pNombreAutorizado );
@@ -169,9 +165,9 @@ public class Club
      * Elimina la persona autorizada por el socio con la c�dula dada.
      * @param pCedulaSocio La c�dula del socio que autoriz� a la persona a eliminar.pCedulaSocio!= null && pCedulaSocio! ""
      * @param pNombreAutorizado El nombre del autorizado a eliminar. pNombreAutorizado!= null && pNombreAutorizado!=""
-     * @throws Exception Dispara una excepci�n si el el autorizado a eliminar tiene una factura sin pagar asociada.
+     *
      */
-    public void eliminarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado ) throws Exception
+    public void eliminarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado )
     {
         Socio s = buscarSocio( pCedulaSocio );
         s.eliminarAutorizado( pNombreAutorizado );
@@ -184,9 +180,9 @@ public class Club
      * @param pNombreCliente El nombre la persona que realiz� en consumo. pNombreCliente != null && pNombreCliente != "".
      * @param pConcepto El concepto del consumo. pConcepto != null && pConcepto != "".
      * @param pValor El valor del consumo. pValor >= 0.
-     * @throws Exception Dispara una excepci�n en caso de que el socio no tenga fondos suficientes para asumir este consumo.
+     *
      */
-    public void registrarConsumo( String pCedulaSocio, String pNombreCliente, String pConcepto, double pValor ) throws Exception
+    public void registrarConsumo( String pCedulaSocio, String pNombreCliente, String pConcepto, double pValor )
     {
         Socio s = buscarSocio( pCedulaSocio );
         s.registrarConsumo( pNombreCliente, pConcepto, pValor );
@@ -207,9 +203,9 @@ public class Club
      * <b>post: </b> Se borr� la factura del vector del socio. <br>
      * @param pCedulaSocio La c�dula del socio. pCedulaSocio != null && pCedulaSocio != "".
      * @param pFacturaIndice El �ndice de la factura a pagar. pFacturaIndice >= 0.
-     * @throws Exception Dispara una excepci�n en caso de que el usuario no tenga fondos suficientes.
+     *
      */
-    public void pagarFacturaSocio( String pCedulaSocio, int pFacturaIndice ) throws Exception
+    public void pagarFacturaSocio( String pCedulaSocio, int pFacturaIndice )
     {
         Socio s = buscarSocio( pCedulaSocio );
         s.pagarFactura( pFacturaIndice );
@@ -221,9 +217,8 @@ public class Club
      * <b>post: </b> Los fondos del socio aumentaron en el valor especificado.
      * @param pCedulaSocio La c�dula del socio. pCedulaSocio != null && pCedulaSocio != "".
      * @param pValor Valor por el cual se desean aumentar los fondos. pValor >= 0.
-     * @throws Exception Dispara una excepci�n en caso de que el valor especificado genere una cantidad de fondos no permitida para el socio.
-     */
-    public void aumentarFondosSocio( String pCedulaSocio, double pValor ) throws Exception
+     *   */
+    public void aumentarFondosSocio( String pCedulaSocio, double pValor )
     {
         Socio s = buscarSocio( pCedulaSocio );
         s.aumentarFondos( pValor );
