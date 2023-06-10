@@ -1,6 +1,5 @@
 
 package club;
-
 /**
  * Clase que modela una factura en el club.
  */
