@@ -31,22 +31,22 @@ public class Socio
     /**
      * Dinero base con el que empiezan todos los socios regulares.
      */
-    public final static double FONDOS_INICIALES_REGULARES = 50000;
+    public final static double FONDOS_INICIALES_REGULARES = 50;
 
     /**
      * Dinero base con el que empiezan todos los socios VIP.
      */
-    public final static double FONDOS_INICIALES_VIP = 100000;
+    public final static double FONDOS_INICIALES_VIP = 100;
 
     /**
      * Dinero m�ximo que puede tener un socio regular en sus fondos.
      */
-    public final static double MONTO_MAXIMO_REGULARES = 1000000;
+    public final static double MONTO_MAXIMO_REGULARES = 1000;
 
     /**
      * Dinero m�ximo que puede tener un socio VIP en sus fondos.
      */
-    public final static double MONTO_MAXIMO_VIP = 5000000;
+    public final static double MONTO_MAXIMO_VIP = 5000;
 
     // -----------------------------------------------------------------
     // Atributos
