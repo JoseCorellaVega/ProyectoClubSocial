@@ -10,7 +10,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int op;
-        Club c = new Club();
+        Club c = new Club(); //HOLA, PROBANDO EL PULL
 
         do{
             System.out.println("1. Afiliar un socio al club.");
