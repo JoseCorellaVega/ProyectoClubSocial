@@ -19,7 +19,21 @@ public class Socio {
         this.fondos = tipo == Tipo.VIP ? 100 : 50;
     }
 
-    public String getCedula() { return cedula; }
+    public String getCedula() {
+        return cedula;
+    }
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public ArrayList<String> getAutorizados() {
+        return autorizados;
+    }
+
+    public ArrayList<Factura> getFacturas() {
+        return facturas;
+    }
 
     public void agregarAutorizado(String nombre) throws ValorInvalido {
         if (nombre.isEmpty()) throw new ValorInvalido("Nombre de autorizado inválido");

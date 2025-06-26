@@ -1,4 +1,3 @@
-
 package club;
 
 public class Factura {
@@ -20,6 +19,14 @@ public class Factura {
 
     public int getNumero() {
         return numero;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public boolean estaPagada() {
+        return pagada;
     }
 
     public void pagar() throws ValorInvalido {

@@ -10,7 +10,7 @@ public class Main {
         Club c = new Club();
 
         do {
-            System.out.println("1. Afiliar un socio al club.");
+            System.out.println("\n1. Afiliar un socio al club.");
             System.out.println("2. Registrar una persona autorizada por un socio.");
             System.out.println("3. Pagar una factura.");
             System.out.println("4. Registrar un consumo en la cuenta de un socio");
@@ -20,6 +20,7 @@ public class Main {
             System.out.println("8. Salir");
             System.out.print("Ingrese una opcion: ");
             op = Integer.parseInt(sc.next());
+
             try {
                 switch (op) {
                     case 1: {
@@ -29,9 +30,11 @@ public class Main {
                         String cedula = sc.next();
                         System.out.print("Ingrese tipo de socio (VIP o REGULAR): ");
                         Tipo tipo = Tipo.valueOf(sc.next().toUpperCase());
+
                         c.afiliarSocio(nombre, cedula, tipo);
                         System.out.println("Socio afiliado exitosamente.");
                     } break;
+
                     case 2: {
                         System.out.print("Ingrese cédula del socio: ");
                         String cedula = sc.next();
@@ -40,12 +43,14 @@ public class Main {
                         c.registrarAutorizado(cedula, nombreAut);
                         System.out.println("Autorizado registrado exitosamente.");
                     } break;
+
                     case 3: {
                         System.out.print("Ingrese número de factura: ");
                         int numero = sc.nextInt();
                         c.pagarFactura(numero);
                         System.out.println("Factura pagada exitosamente.");
                     } break;
+
                     case 4: {
                         System.out.print("Ingrese cédula del socio: ");
                         String cedula = sc.next();
@@ -56,6 +61,7 @@ public class Main {
                         c.registrarConsumo(cedula, desc, valor);
                         System.out.println("Consumo registrado exitosamente.");
                     } break;
+
                     case 5: {
                         System.out.print("Ingrese cédula del socio: ");
                         String cedula = sc.next();
@@ -64,41 +70,35 @@ public class Main {
                         c.aumentarFondos(cedula, monto);
                         System.out.println("Fondos aumentados exitosamente.");
                     } break;
-                    case 6:
-                        System.out.print("Ingrese cédula del socio: ");
-                        String cedulaConsumo = sc.nextLine();
-                        try {
-                            double total = club.obtenerTotalConsumos(cedulaConsumo);
-                            System.out.println("Total de consumos: $" + total);
-                        } catch (SocioNoExisteException e) {
-                            System.out.println("Error: " + e.getMessage());
-                        }
-                        break;
 
-                    case 7:
+                    case 6: {
                         System.out.print("Ingrese cédula del socio: ");
-                        String cedulaEliminar = sc.nextLine();
-                        try {
-                            boolean puedeEliminarse = club.sePuedeEliminarSocio(cedulaEliminar);
-                            if (puedeEliminarse) {
-                                System.out.println("El socio **puede ser eliminado**.");
-                            } else {
-                                System.out.println("El socio **no puede ser eliminado** por alguna restricción.");
-                            }
-                        } catch (SocioNoExisteException e) {
-                            System.out.println("Error: " + e.getMessage());
+                        String cedulaConsumo = sc.next();
+                        double total = c.obtenerTotalConsumos(cedulaConsumo);
+                        System.out.println("Total de consumos: $" + total);
+                    } break;
+
+                    case 7: {
+                        System.out.print("Ingrese cédula del socio: ");
+                        String cedulaEliminar = sc.next();
+                        boolean puedeEliminarse = c.sePuedeEliminarSocio(cedulaEliminar);
+                        if (puedeEliminarse) {
+                            System.out.println("El socio **puede ser eliminado**.");
+                        } else {
+                            System.out.println("El socio **no puede ser eliminado** por alguna restricción.");
                         }
-                        break;
+                    } break;
 
                     case 8:
                         System.out.println("Gracias!");
                         break;
+
                     default:
                         System.out.println("Opción inválida.");
                 }
-            } catch (ValorInvalido | SocioNoEncontrado | FacturaNoEncontrada e) {
+            } catch (ValorInvalido | SocioNoEncontrado | FacturaNoEncontrada | SocioNoExisteException e) {
                 System.out.println("Error: " + e.getMessage());
             }
-        } while (op != 6);
+        } while (op != 8);
     }
 }

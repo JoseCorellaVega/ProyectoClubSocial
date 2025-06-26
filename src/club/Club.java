@@ -46,4 +46,31 @@ public class Club {
         }
         throw new FacturaNoEncontrada("Factura no encontrada: " + numero);
     }
+
+    public double obtenerTotalConsumos(String cedula) throws SocioNoExisteException {
+        for (Socio s : socios) {
+            if (s.getCedula().equals(cedula)) {
+                double total = 0;
+                for (Factura f : s.getFacturas()) {
+                    total += f.getValor();
+                }
+                return total;
+            }
+        }
+        throw new SocioNoExisteException("Socio no existe con cédula: " + cedula);
+    }
+
+    public boolean sePuedeEliminarSocio(String cedula) throws SocioNoExisteException {
+        for (Socio s : socios) {
+            if (s.getCedula().equals(cedula)) {
+                if (s.getTipo() == Socio.Tipo.VIP) return false;
+                if (s.getAutorizados().size() > 1) return false;
+                for (Factura f : s.getFacturas()) {
+                    if (!f.estaPagada()) return false;
+                }
+                return true;
+            }
+        }
+        throw new SocioNoExisteException("Socio no existe con cédula: " + cedula);
+    }
 }
