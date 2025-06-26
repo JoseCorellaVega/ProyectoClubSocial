@@ -24,21 +24,23 @@ public class Main {
             op = Integer.parseInt(sc.next());
             switch (op){
                 case 1:{
-
-
-
+                    System.out.println("Usted escogio Afiliar un socio al club");
 
                 }break;
                 case 2:{
+                    System.out.println("Usted escogio Registrar una persona");
 
                 }break;
                 case 3:{
+                    System.out.println("Usted escogio Pagar una factura");
 
                 }break;
                 case 4:{
+                    System.out.println("Usted escogio Registrar un consumo en la ceunta de un socio");
 
                 }break;
                 case 5:{
+                    System.out.println("Usted escogio Aumentar fondos de la cuenta de un socio");
 
                 }break;
                 case 6:{
