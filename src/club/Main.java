@@ -1,57 +1,112 @@
-package club;
-
 import java.util.Scanner;
-import club.Socio.Tipo;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
-    public static void main(String[] args) throws Exception {
-
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int op;
-        Club c = new Club(); //HOLA, PROBANDO EL PULL
-        // jose novelero y vos tambien pedro
+        Club club = new Club();
 
-        do{
-            System.out.println("1. Afiliar un socio al club.");
-            System.out.println("2. Registrar una persona autorizada por un socio.");
-            System.out.println("3. Pagar una factura.");
-            System.out.println("4. Registrar un consumo en la cuenta de un socio");
-            System.out.println("5. Aumentar fondos de la cuenta de un socio");
-            System.out.println("6. Salir");
-            System.out.print("Ingrese una opcion: ");
-            op = Integer.parseInt(sc.next());
-            switch (op){
-                case 1:{
-                    System.out.println("Usted escogio Afiliar un socio al club");
+        int opcion;
+        do {
+            System.out.println("\n--- MENÚ ---");
+            System.out.println("1. Registrar socio");
+            System.out.println("2. Eliminar socio");
+            System.out.println("3. Agregar fondo");
+            System.out.println("4. Registrar consumo");
+            System.out.println("5. Mostrar información socio");
+            System.out.println("6. Autorizar persona");
+            System.out.println("7. Mostrar resumen del club");
+            System.out.println("8. Consultar total consumos por cédula");
+            System.out.println("9. Verificar si un socio puede ser eliminado");
+            System.out.println("0. Salir");
+            System.out.print("Opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine();
 
-                }break;
-                case 2:{
-                    System.out.println("Usted escogio Registrar una persona");
+            try {
+                switch (opcion) {
+                    case 1:
+                        System.out.print("Nombre: ");
+                        String nombre = sc.nextLine();
+                        System.out.print("Cédula: ");
+                        String cedula = sc.nextLine();
+                        System.out.print("VIP (true/false): ");
+                        boolean vip = sc.nextBoolean();
+                        sc.nextLine();
+                        club.registrarSocio(nombre, cedula, vip);
+                        break;
 
-                }break;
-                case 3:{
-                    System.out.println("Usted escogio Pagar una factura");
+                    case 2:
+                        System.out.print("Cédula del socio a eliminar: ");
+                        String cedEliminar = sc.nextLine();
+                        club.eliminarSocio(cedEliminar);
+                        break;
 
-                }break;
-                case 4:{
-                    System.out.println("Usted escogio Registrar un consumo en la ceunta de un socio");
+                    case 3:
+                        System.out.print("Cédula del socio: ");
+                        String cedFondo = sc.nextLine();
+                        System.out.print("Monto: ");
+                        double monto = sc.nextDouble();
+                        sc.nextLine();
+                        club.agregarFondo(cedFondo, monto);
+                        break;
 
-                }break;
-                case 5:{
-                    System.out.println("Usted escogio Aumentar fondos de la cuenta de un socio");
+                    case 4:
+                        System.out.print("Cédula del socio: ");
+                        String cedConsumo = sc.nextLine();
+                        System.out.print("Descripción: ");
+                        String desc = sc.nextLine();
+                        System.out.print("Monto: ");
+                        double montoC = sc.nextDouble();
+                        sc.nextLine();
+                        club.registrarConsumo(cedConsumo, desc, montoC);
+                        break;
 
-                }break;
-                case 6:{
-                    System.out.println("Gracias!");
-                }break;
-                default:
-                    System.out.println("opcion invalida");
+                    case 5:
+                        System.out.print("Cédula: ");
+                        String cedInf = sc.nextLine();
+                        System.out.println(club.mostrarInformacionSocio(cedInf));
+                        break;
+
+                    case 6:
+                        System.out.print("Cédula del socio: ");
+                        String cedSocio = sc.nextLine();
+                        System.out.print("Nombre de autorizado: ");
+                        String autorizado = sc.nextLine();
+                        club.autorizarPersona(cedSocio, autorizado);
+                        break;
+
+                    case 7:
+                        System.out.println(club.resumenClub());
+                        break;
+
+                    case 8:
+                        System.out.print("Cédula del socio: ");
+                        String cedConsTotal = sc.nextLine();
+                        double total = club.totalConsumosSocio(cedConsTotal);
+                        System.out.println("Total de consumos: $" + total);
+                        break;
+
+                    case 9:
+                        System.out.print("Cédula del socio: ");
+                        String cedVerif = sc.nextLine();
+                        boolean puedeEliminarse = club.sePuedeEliminarSocio(cedVerif);
+                        System.out.println(puedeEliminarse ?
+                                "Sí se puede eliminar." : "No se puede eliminar.");
+                        break;
+
+                    case 0:
+                        System.out.println("Saliendo...");
+                        break;
+
+                    default:
+                        System.out.println("Opción inválida.");
+                }
+            } catch (SocioNoExisteException | SocioNoEliminableException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error inesperado: " + e.getMessage());
             }
 
-        }while(op!=6);
-
-
+        } while (opcion != 0);
     }
 }
