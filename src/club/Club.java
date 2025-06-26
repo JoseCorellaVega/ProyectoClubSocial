@@ -1,142 +1,49 @@
-
 package club;
+
 import java.util.ArrayList;
-import club.Socio.Tipo;
 
-public class Club
-{
+public class Club {
+    private ArrayList<Socio> socios = new ArrayList<>();
+    private ArrayList<Factura> facturas = new ArrayList<>();
 
-    public final static int MAXIMO_VIP = 3;
-
-    private ArrayList<Socio> socios;
-
-    public Club( )
-    {
-        socios = new ArrayList<Socio>( );
+    public void afiliarSocio(String nombre, String cedula, Socio.Tipo tipo) throws ValorInvalido {
+        if (nombre.isEmpty() || cedula.isEmpty()) throw new ValorInvalido("Nombre o cédula vacíos");
+        socios.add(new Socio(nombre, cedula, tipo));
     }
 
-
-
-    public ArrayList<Socio> darSocios( )
-    {
-        return socios;
+    public void registrarAutorizado(String cedula, String nombre) throws SocioNoEncontrado, ValorInvalido {
+        Socio socio = buscarSocio(cedula);
+        socio.agregarAutorizado(nombre);
     }
 
-    public void afiliarSocio( String pCedula, String pNombre, Tipo pTipo )
-    {
+    public void pagarFactura(int numeroFactura) throws FacturaNoEncontrada, ValorInvalido {
+        Factura factura = buscarFactura(numeroFactura);
+        factura.pagar();
+    }
 
-        // Revisar que no haya ya un socio con la misma c�dula
-        Socio s = buscarSocio( pCedula );
-        if( pTipo == Tipo.VIP && contarSociosVIP( ) == MAXIMO_VIP )
-        {
-            System.out.println("El club en el momento no acepta m�s socios VIP" );
+    public void registrarConsumo(String cedula, String descripcion, double valor) throws SocioNoEncontrado, ValorInvalido {
+        Socio socio = buscarSocio(cedula);
+        Factura f = new Factura(descripcion, valor, socio);
+        facturas.add(f);
+        socio.agregarFactura(f);
+    }
 
+    public void aumentarFondos(String cedula, double monto) throws SocioNoEncontrado, ValorInvalido {
+        Socio socio = buscarSocio(cedula);
+        socio.aumentarFondos(monto);
+    }
+
+    private Socio buscarSocio(String cedula) throws SocioNoEncontrado {
+        for (Socio s : socios) {
+            if (s.getCedula().equals(cedula)) return s;
         }
-        // Revisar que no se haya alcanzado el l�mite de subscripciones VIP
-        if( s == null )
-        {
-            // Se crea el objeto del nuevo socio (todav�a no se ha agregado al club)
-            Socio nuevoSocio = new Socio( pCedula, pNombre, pTipo );
-            // Se agrega el nuevo socio al club
-            socios.add( nuevoSocio );
+        throw new SocioNoEncontrado("Socio no encontrado: " + cedula);
+    }
+
+    private Factura buscarFactura(int numero) throws FacturaNoEncontrada {
+        for (Factura f : facturas) {
+            if (f.getNumero() == numero) return f;
         }
-        else
-        {
-            System.out.println( "El socio ya existe" );
-        }
-    }
-
-    public Socio buscarSocio( String pCedulaSocio )
-    {
-        Socio elSocio = null;
-
-        boolean encontre = false;
-        int numSocios = socios.size( );
-        for( int i = 0; i < numSocios && !encontre; i++ )
-        {
-            Socio s = socios.get( i );
-            if( s.darCedula( ).equals( pCedulaSocio ) )
-            {
-                elSocio = s;
-                encontre = true;
-            }
-        }
-
-        return elSocio;
-    }
-
-    public int contarSociosVIP( )
-    {
-        int conteo = 0;
-        for( Socio socio : socios )
-        {
-            if( socio.darTipo( ) == Tipo.VIP )
-            {
-                conteo++;
-            }
-        }
-        return conteo;
-    }
-
-    public ArrayList<String> darAutorizadosSocio( String pCedulaSocio )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        ArrayList<String> autorizados = new ArrayList<String>( );
-
-        autorizados.add( s.darNombre( ) );
-        autorizados.addAll( s.darAutorizados( ) );
-
-        return autorizados;
-    }
-
-
-    public void agregarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        s.agregarAutorizado( pNombreAutorizado );
-
-    }
-
-    public void eliminarAutorizadoSocio( String pCedulaSocio, String pNombreAutorizado )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        s.eliminarAutorizado( pNombreAutorizado );
-    }
-
-
-    public void registrarConsumo( String pCedulaSocio, String pNombreCliente, String pConcepto, double pValor )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        s.registrarConsumo( pNombreCliente, pConcepto, pValor );
-    }
-
-    public ArrayList<Factura> darFacturasSocio( String pCedulaSocio )
-    {
-        return buscarSocio( pCedulaSocio ).darFacturas( );
-    }
-
-    public void pagarFacturaSocio( String pCedulaSocio, int pFacturaIndice )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        s.pagarFactura( pFacturaIndice );
-
-    }
-
-    public void aumentarFondosSocio( String pCedulaSocio, double pValor )
-    {
-        Socio s = buscarSocio( pCedulaSocio );
-        s.aumentarFondos( pValor );
-    }
-
-    public String metodo1( )
-    {
-        return "respuesta1";
-    }
-
-
-    public String metodo2( )
-    {
-        return "respuesta2";
+        throw new FacturaNoEncontrada("Factura no encontrada: " + numero);
     }
 }
-

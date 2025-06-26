@@ -1,44 +1,30 @@
 
 package club;
 
-public class Factura
-{
-
-    private String concepto;
-
-
+public class Factura {
+    private static int contador = 1;
+    private int numero;
+    private String descripcion;
     private double valor;
+    private boolean pagada;
+    private Socio socio;
 
-
-    private String nombre;
-
-    public Factura( String pNombre, String pConcepto, double pValor )
-    {
-        nombre = pNombre;
-        concepto = pConcepto;
-        valor = pValor;
+    public Factura(String descripcion, double valor, Socio socio) throws ValorInvalido {
+        if (valor <= 0) throw new ValorInvalido("Valor de factura inválido");
+        this.numero = contador++;
+        this.descripcion = descripcion;
+        this.valor = valor;
+        this.pagada = false;
+        this.socio = socio;
     }
 
-
-    public String darConcepto( )
-    {
-        return concepto;
+    public int getNumero() {
+        return numero;
     }
 
-    public double darValor( )
-    {
-        return valor;
-    }
-
-
-    public String darNombre( )
-    {
-        return nombre;
-    }
-
-    public String toString( )
-    {
-        String factura = concepto + "    $" + valor + "    (" + nombre + ")";
-        return factura;
+    public void pagar() throws ValorInvalido {
+        if (pagada) throw new ValorInvalido("Factura ya está pagada");
+        socio.descontarFondos(valor);
+        pagada = true;
     }
 }
