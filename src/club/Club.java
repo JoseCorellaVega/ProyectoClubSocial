@@ -8,6 +8,13 @@ public class Club {
 
     public void afiliarSocio(String nombre, String cedula, Socio.Tipo tipo) throws ValorInvalido {
         if (nombre.isEmpty() || cedula.isEmpty()) throw new ValorInvalido("Nombre o cédula vacíos");
+
+        for (Socio s : socios) {
+            if (s.getCedula().equals(cedula)) {
+                throw new ValorInvalido("Ya existe un socio con la misma cédula: " + cedula);
+            }
+        }
+
         socios.add(new Socio(nombre, cedula, tipo));
     }
 
