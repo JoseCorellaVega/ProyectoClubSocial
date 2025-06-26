@@ -74,6 +74,7 @@ public class Main {
                             System.out.println("Error: " + e.getMessage());
                         }
                         break;
+
                     case 7:
                         System.out.print("Ingrese cédula del socio: ");
                         String cedulaEliminar = sc.nextLine();
